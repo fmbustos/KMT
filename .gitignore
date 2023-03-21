@@ -160,3 +160,7 @@ cython_debug/
 #.idea/
 
 videos/
+repeating/
+data/
+analysis/
+limpianding.py
