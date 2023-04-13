@@ -1,6 +1,14 @@
 from KMT import *
+# from ultralytics import YOLO
+# import matplotlib
+# matplotlib.use('tkagg')
 
-a = [1,2,3,4,5]
+# model = YOLO("yolov8n.pt")
 
-if 5 in a:
-    print(a.index(5))
+futbol_folder = "D:/Kauel/KMT/videos/futbol_frames"
+golf_folder = "D:/Kauel/KMT/videos/golf_frames"
+
+lws, lis, ims = kload_analysis('futbol_analysis')
+
+kplot_angles(lws,ims)
+

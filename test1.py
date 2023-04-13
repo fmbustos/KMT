@@ -1,4 +1,5 @@
 from KMT import *
+from ultralytics import YOLO
 
 # mp_drawing = mp.solutions.drawing_utils
 # mp_drawing_styles = mp.solutions.drawing_styles
@@ -485,16 +486,36 @@ from KMT import *
 
 # kplot_compare(lws[0], lws[1], lw_a)
 
+##########################################################################################################################3
 
-def angle(v1,v2):
-    v1_magnitude = 0
+v1 = np.array([[0,0,0], [1,1,1]])
+v2 = np.array([[0,0,0], [-1,-1,-0.8]])
+
+angle = vector_angle(v1,v2)
+angle_degrees = angle*180/np.pi
+
+print(angle)
+
+fig = plt.figure()
+ax = fig.add_subplot(projection = '3d')
+set_axes_for_landmarks_world(ax)
+
+av1 = Arrow3D([v1[0][0],v1[1][0]],[v1[0][1],v1[1][1]],[v1[0][2],v1[1][2]], **arrow_prop_dict)
+av2 = Arrow3D([v2[0][0],v2[1][0]],[v2[0][1],v2[1][1]],[v2[0][2],v2[1][2]], **arrow_prop_dict)
+
+ax.add_artist(av1)
+ax.add_artist(av2)
+x, y, z = arc_points(v1,v2)
 
 
-image = cv2.imread(test_frame_folder + '/frame00114.jpg')
+ax.plot(x,y,z, label = 'arc', color = 'red')
 
-lw, li, im = kanalyze_image(image)
+plt.show()
 
-cv2.imshow('tuvieja',im)
-if cv2.waitKey(0) & 0xFF == ord('q'):
-    cv2.destroyWindow('Body Tracking')
+##################################################################################################33
+
+lws, lis, ims = kload_analysis('probanding')
+
+
+kplot_landmarks(lws, plot_body_axis=['central', 'left_shoulder'])
 
