@@ -1,6 +1,7 @@
 import cv2
-import mediapipe as mp
 import numpy as np
+import mediapipe as mp
+from ultralytics import YOLO
 import matplotlib.pyplot as plt
 from matplotlib import animation
 from mpl_toolkits.mplot3d import Axes3D
@@ -13,6 +14,8 @@ import time
 import os
 from copy import deepcopy
 from copy import copy
+import matplotlib
+matplotlib.use('tkagg')
 
 try:
     from alive_progress import alive_bar
@@ -648,10 +651,11 @@ def kextract_frames(video_file, save_folder):
     print('Freames extracted from ' + video_file)
     return True
 
-def kanalyze_image(image):
+def kanalyze_image(image, draw = True):
     """
     Analyzes an image with mediapipe and returns the landmarks.
     :param image: a cv2 image to be analyzed
+    :param draw: True or False, if true the landmarks will be drawn into the image.
     :return: list of world landmarks, list of image landmarks, image with the draw of the solution
     """
 
@@ -670,7 +674,6 @@ def kanalyze_image(image):
     landmarks_world_vectors = []
     landmarks_image_vectors = []
 
-
     for landmark_world, landmark_image in zip(frame_landmarks_world,frame_landmarks_image):
         landmark_world_vector = np.array([landmark_world.x,landmark_world.y,landmark_world.z])
         landmark_image_vector = np.array([landmark_image.x,landmark_image.y,landmark_image.z])
@@ -680,13 +683,13 @@ def kanalyze_image(image):
         landmarks_world_vectors.append(rotated_landmark_world_vector)
         landmarks_image_vectors.append(landmark_image_vector)
 
-
-    mp_drawing.draw_landmarks(
-        image,
-        results.pose_landmarks,
-        mp_holistic.POSE_CONNECTIONS,
-        landmark_drawing_spec=mp_drawing_styles.get_default_pose_landmarks_style())
-    
+    if draw:
+        mp_drawing.draw_landmarks(
+            image,
+            results.pose_landmarks,
+            mp_holistic.POSE_CONNECTIONS,
+            landmark_drawing_spec=mp_drawing_styles.get_default_pose_landmarks_style())
+        
     return landmarks_world_vectors, landmarks_image_vectors, image
 
 def kanalyze_image_xyz(image):
@@ -850,7 +853,9 @@ def kplot_landmarks_world(video_landmarks_world, video_images = [], plot_body_ax
     """
     Plots the landmarks in a 3d grid, aditionally plots the image used to make the data beside for comparation.
     :param video_landmarks_world: List of landmarks to animate.
-    :param image_list: list of cv2 images from witch the landmarks where calculated to put beside the animation.
+    :param video_images: list of cv2 images from witch the landmarks where calculated to put beside the animation.
+    :param plot_body_axis: List with names of diferent body parts to see axis relative to that body part.
+    :param plot_angles: List with names of diferent body partes to see the angles that they make.
     :save: True or False. If true the video will be recorded as a .gif
     :param filename: If save is True, the video will be saved with this name.
     :param fps: If save is True, this will be the framerate of the saved video
@@ -1959,6 +1964,7 @@ def ksave_analysis(video_data, folder_name = 'analysis', data_name = '' , landma
     :param landmarks_world_name: Optional, for saving diferent but related data in the same folder, this file will be have this name ignoring \"data_name\".
     :param landmarks_image_name: Optional, for saving diferent but related data in the same folder, this file will be have this name ignoring \"data_name\".
     :param video_name: Optional, for saving diferent but related data in the same folder, this file will be have this name ignoring \"data_name\".
+    :return: video_landmarks_world, video_landmarks_image, image_list
     """
     
     video_landmarks_world, video_landmarks_image, video_images = video_data[0], video_data[1], video_data[2]
@@ -1966,18 +1972,18 @@ def ksave_analysis(video_data, folder_name = 'analysis', data_name = '' , landma
 
     if data_name == '':
         if landmarks_world_name == '':
-            landmarks_world_name = 'lw'
+            landmarks_world_name = 'lws'
         if landmarks_image_name == '':
-            landmarks_image_name = 'li'
+            landmarks_image_name = 'lis'
         if video_name == '':
-            video_name = 'video'
+            video_name = 'ims'
     else:
         if landmarks_world_name == '':
-            landmarks_world_name = data_name + '_lw'
+            landmarks_world_name = data_name + '_lws'
         if landmarks_image_name == '':
-            landmarks_image_name = data_name + '_li'
+            landmarks_image_name = data_name + '_lis'
         if video_name == '':
-            video_name = data_name + '_video'  
+            video_name = data_name + '_ims'
 
     path = os.getcwd()
     new_folder = os.path.join(path, folder_name)
@@ -2003,26 +2009,27 @@ def kload_analysis(folder_name, data_name = '' , video_landmarks_world_name = ''
     :param landmarks_world_name: Optional, when related data was saved in the same folder, this will load that specific file ignoring \"data_name\".
     :param landmarks_image_name: Optional, when related data was saved in the same folder, this will load that specific file ignoring \"data_name\".
     :param video_name: Optional, when related data was saved in the same folder, this will load that specific file ignoring \"data_name\".
+    :return: video_landmarks_world, video_landmarks_image, image_list
     """
 
     if data_name == '':
         if video_landmarks_world_name == '':
-            video_landmarks_world_name = 'lw.json'
+            video_landmarks_world_name = 'lws.json'
         if video_landmarks_image_name == '':
-            video_landmarks_image_name = 'li.json'
+            video_landmarks_image_name = 'lis.json'
         if video_name == '':
-            video_name = 'video.avi'
+            video_name = 'ims.avi'
     else:
         if video_landmarks_world_name == '':
-            video_landmarks_world_name = data_name + '_lw.json'
+            video_landmarks_world_name = data_name + '_lws.json'
         elif video_landmarks_world_name[-5:] != '.json':
             video_landmarks_world_name += 'json'
         if video_landmarks_image_name == '':
-            video_landmarks_image_name = data_name + '_li.json'
+            video_landmarks_image_name = data_name + '_lis.json'
         elif video_landmarks_image_name[-5:] != '.json':
             video_landmarks_image_name += 'json'
         if video_name == '':
-            video_name = data_name + '_video.avi'
+            video_name = data_name + '_ims.avi'
         elif video_name[-4:] != '.avi':
             video_name += '.avi'
 

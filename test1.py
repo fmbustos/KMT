@@ -1,5 +1,5 @@
 from KMT import *
-from ultralytics import YOLO
+
 
 # mp_drawing = mp.solutions.drawing_utils
 # mp_drawing_styles = mp.solutions.drawing_styles
@@ -488,34 +488,56 @@ from ultralytics import YOLO
 
 ##########################################################################################################################3
 
-v1 = np.array([[0,0,0], [1,1,1]])
-v2 = np.array([[0,0,0], [-1,-1,-0.8]])
+# v1 = np.array([[0,0,0], [1,1,1]])
+# v2 = np.array([[0,0,0], [-1,-1,-0.8]])
 
-angle = vector_angle(v1,v2)
-angle_degrees = angle*180/np.pi
+# angle = vector_angle(v1,v2)
+# angle_degrees = angle*180/np.pi
 
-print(angle)
+# print(angle)
 
-fig = plt.figure()
-ax = fig.add_subplot(projection = '3d')
-set_axes_for_landmarks_world(ax)
+# fig = plt.figure()
+# ax = fig.add_subplot(projection = '3d')
+# set_axes_for_landmarks_world(ax)
 
-av1 = Arrow3D([v1[0][0],v1[1][0]],[v1[0][1],v1[1][1]],[v1[0][2],v1[1][2]], **arrow_prop_dict)
-av2 = Arrow3D([v2[0][0],v2[1][0]],[v2[0][1],v2[1][1]],[v2[0][2],v2[1][2]], **arrow_prop_dict)
+# av1 = Arrow3D([v1[0][0],v1[1][0]],[v1[0][1],v1[1][1]],[v1[0][2],v1[1][2]], **arrow_prop_dict)
+# av2 = Arrow3D([v2[0][0],v2[1][0]],[v2[0][1],v2[1][1]],[v2[0][2],v2[1][2]], **arrow_prop_dict)
 
-ax.add_artist(av1)
-ax.add_artist(av2)
-x, y, z = arc_points(v1,v2)
+# ax.add_artist(av1)
+# ax.add_artist(av2)
+# x, y, z = arc_points(v1,v2)
 
 
-ax.plot(x,y,z, label = 'arc', color = 'red')
+# ax.plot(x,y,z, label = 'arc', color = 'red')
 
-plt.show()
+# plt.show()
 
 ##################################################################################################33
 
-lws, lis, ims = kload_analysis('probanding')
+# lws, lis, ims = kload_analysis('probanding')
 
 
-kplot_landmarks(lws, plot_body_axis=['central', 'left_shoulder'])
+# kplot_landmarks(lws, plot_body_axis=['central', 'left_shoulder'])
 
+ksave_analysis(kframe_analysis("D:/Kauel/KMT/videos/futbol_frames", 230, 302), 'D:/Kauel/KMT/futbol_analysis')
+
+# # Load the YOLOv8 model
+# model = YOLO('yolov8n.pt')
+
+# # Open the video file
+# video_path = "D:/Kauel/KMT/futbol_analysis/video.avi"
+# # cap = cv2.VideoCapture(video_path)
+
+# results = model.track(source=video_path, conf=0.4, iou=0.5)
+
+# for result in results:
+#     annotated_frame = result.plot()
+#     cv2.imshow("YOLOv8 Inference", annotated_frame)
+#     # Break the loop if 'q' is pressed
+#     if cv2.waitKey(100) & 0xFF == ord("q"):
+#         break
+
+
+# # Release the video capture object and close the display window
+# # cap.release()
+# cv2.destroyAllWindows()
