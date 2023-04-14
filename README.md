@@ -26,7 +26,6 @@ Programa de rastreo de movimiento para deportistas desarrollado por Kauel, `KMT`
     * [kplot_landmarks](#kplot_landmarks)
     * [kplot_angles](#kplot_angles)
     
-  
 <!-- TOC -->
 ---
 
@@ -78,11 +77,11 @@ Las funciones principales del módulo 'KMT':
 
 Analiza un video y devuelve una tupla con tres listas, una con las coordenadas reales aproximadas de 33 puntos claves del cuerpo, la segunda con las coordenadas en la imagen de los mismos puntos claves y una lista de cada imagen del video en la forma de un arreglo de numpy (numpy array)
 
-Entrada
--video_file: Ruta al video
+Entrada:
+- video_file: Ruta al video
 
-Salida
--video_landmarks_world, video_landmarks_image, image_list
+Salida:
+- video_landmarks_world, video_landmarks_image, image_list
 ```python
 from KMT import *
 
@@ -95,16 +94,18 @@ lws, lis, ims = kvideo_analysis(video_file)
 
 Guarda la información de 'kvideo_analysis()' en la carpeta asignada, los landmarks world como lws.json, landmarks image como lis.json y las imagenes como un video llamado ims.avi. Devuelve la misma tupla con 3 listas que se le entregó.
 
-Entrada
--video_data: Tupla con la información del análisis en el mismo orden que retorna 'kvideo_analysis()'.
--folder_name: Default = analysis, Nombre de la carpeta, si no existe esta función la creará.
--data_name: Opcional, para guardar informacion diferente pero relacionada en la misma carpeta, todos los datos guardados tendrán este nombre más un indicador del tipo de información.
--landmarks_world_name: Opcional, para guardar landmarks world diferentes pero relacionados en la misma carpeta, ignorará el nombre de data_name.
--landmarks_image_name: Opcional, para guardar landmarks image diferentes pero relacionados en la misma carpeta, ignorará el nombre de data_name.
--video_name: Opcional, para guardar imagenes diferentes pero relacionados en la misma carpeta, ignorará el nombre de data_name.
+Entrada:
 
-Salida
--video_landmarks_world, video_landmarks_image, image_list
+- video_data: Tupla con la información del análisis en el mismo orden que retorna 'kvideo_analysis()'.
+- folder_name: Default = analysis, Nombre de la carpeta, si no existe esta función la creará.
+- data_name: Opcional, para guardar informacion diferente pero relacionada en la misma carpeta, todos los datos guardados tendrán este nombre más un indicador del tipo de información.
+- landmarks_world_name: Opcional, para guardar landmarks world diferentes pero relacionados en la misma carpeta, ignorará el nombre de data_name.
+- landmarks_image_name: Opcional, para guardar landmarks image diferentes pero relacionados en la misma carpeta, ignorará el nombre de data_name.
+- video_name: Opcional, para guardar imagenes diferentes pero relacionados en la misma carpeta, ignorará el nombre de data_name.
+
+Salida:
+
+- video_landmarks_world, video_landmarks_image, image_list
 ```python
 from KMT import *
 
@@ -144,15 +145,17 @@ ksave_analysis(video_data2, data_name = 'data2')
 ### 'kload_analysis()': 
 Carga la información guardada en la carpeta creada por 'ksave_analysis()'
 
-Entrada
--folder_name: Default = analysis, Nombre de la carpeta donde está guardada la información.
--data_name: Opcional, cuando hay información diferente pero relacionada en la misma carpeta, carga todos los datos guardados con este nombre.
--landmarks_world_name: Opcional, cuando hay landmarks world diferentes pero relacionados en la misma carpeta, cargará los datos con este nombre.
--landmarks_image_name: Opcional, cuando hay landmarks images diferentes pero relacionados en la misma carpeta, cargará los datos con este nombre.
--video_name:Opcional, cuando hay videos diferentes pero relacionados en la misma carpeta, cargará los datos con este nombre.
+Entrada:
 
-Salida
--video_landmarks_world, video_landmarks_image, image_list
+- folder_name: Default = analysis, Nombre de la carpeta donde está guardada la información.
+- data_name: Opcional, cuando hay información diferente pero relacionada en la misma carpeta, carga todos los datos guardados con este nombre.
+- landmarks_world_name: Opcional, cuando hay landmarks world diferentes pero relacionados en la misma carpeta, cargará los datos con este nombre.
+- landmarks_image_name: Opcional, cuando hay landmarks images diferentes pero relacionados en la misma carpeta, cargará los datos con este nombre.
+- video_name:Opcional, cuando hay videos diferentes pero relacionados en la misma carpeta, cargará los datos con este nombre.
+
+Salida:
+
+- video_landmarks_world, video_landmarks_image, image_list
 ```python
 from KMT import *
 
@@ -177,17 +180,18 @@ data2 = kload_analysis(path_to_folder, data_name = 'data2')
 ### 'kplot_landmarks_world()'
 Abre una ventana donde grafica los landmarks en una grilla 3d, y si se le entrega lo muestra al lado del video.
     
-Entrada
--video_landmarks_world: Video landmarks entregadas por 'kvideo_analysis()'
--video_images: Opcional, lista de imagenes entregadas por 'kvideo_analysis()'
--plot_body_axis: Opcional, lista con nombres de distintas partes del cuerpo para mostrar ejes de referencia relativos a esa parte del cuerpo. Las opciones válidas son: 'central', 'left_shoulder', 'right_shoulder', 'left_hip', 'right_hip'
--plot_angles: Opcional, lista con nombres de distintas partes del cuerpo para mostrar los distintos ángulos que produce con otras partes del cuerpo o con ejes de referencia. Las opciones válidas son: 'left_shoulder', 'left_elbow', 'right_shoulder', 'right_elbow', 'left_hip', 'left_knee', 'right_hip',  'right_knee'
--save: Booleano opcional, 'default = True'. Si es True guardará un video con los graficos animados como un .gif.
--filename: 'Default = angles_plot.gif', si es que save = True, entonces guardará el la animación con este nombre. Se guardará en el mismo directorio donde esté el .py del programa a menos a que se le de la ruta absoluta. Recordar escribir .gif al final del nombre.
--fps: Default = 30, si es que save = True, entonces la animación guardada tendrá este frame rate.
+Entrada:
 
-Salida
--True si es que termine el proceso sin problemas.
+- video_landmarks_world: Video landmarks entregadas por 'kvideo_analysis()'
+- video_images: Opcional, lista de imagenes entregadas por 'kvideo_analysis()'
+- plot_body_axis: Opcional, lista con nombres de distintas partes del cuerpo para mostrar ejes de referencia relativos a esa parte del cuerpo. Las opciones válidas son: 'central', 'left_shoulder', 'right_shoulder', 'left_hip', 'right_hip'
+- plot_angles: Opcional, lista con nombres de distintas partes del cuerpo para mostrar los distintos ángulos que produce con otras partes del cuerpo o con ejes de referencia. Las opciones válidas son: 'left_shoulder', 'left_elbow', 'right_shoulder', 'right_elbow', 'left_hip', 'left_knee', 'right_hip',  'right_knee'
+- save: Booleano opcional, 'default = True'. Si es True guardará un video con los graficos animados como un .gif.
+- filename: 'Default = angles_plot.gif', si es que save = True, entonces guardará el la animación con este nombre. Se guardará en el mismo directorio donde esté el .py del programa a menos a que se le de la ruta absoluta. Recordar escribir .gif al final del nombre.
+- fps: Default = 30, si es que save = True, entonces la animación guardada tendrá este frame rate.
+
+Salida:
+- True si es que termine el proceso sin problemas.
 ```python
 from KMT import *
 
@@ -221,16 +225,18 @@ kplot_landmarks_world(lws, ims, plot_body_axis = axis, plot_angles = angles, sav
 ### 'kplot_landmarks()'
 Abre una ventana donde grafica múltiples landmarks en 3D.
     
-Entrada
--*landmarks_set: Múltiples video landmarks entregadas por 'kvideo_analysis()', separadas por comas.
--plot_body_axis: Opcional, lista con nombres de distintas partes del cuerpo para mostrar ejes de referencia relativos a esa parte del cuerpo. Las opciones válidas son: 'central', 'left_shoulder', 'right_shoulder', 'left_hip', 'right_hip'
--plot_angles: Opcional, lista con nombres de distintas partes del cuerpo para mostrar los distintos ángulos que produce con otras partes del cuerpo o con ejes de referencia. Las opciones válidas son: 'left_shoulder', 'left_elbow', 'right_shoulder', 'right_elbow', 'left_hip', 'left_knee', 'right_hip',  'right_knee'
--save: Booleano opcional, 'default = True'. Si es True guardará un video con los graficos animados como un .gif.
--filename: 'Default = angles_plot.gif', si es que save = True, entonces guardará el la animación con este nombre. Se guardará en el mismo directorio donde esté el .py del programa a menos a que se le de la ruta absoluta. Recordar escribir .gif al final del nombre.
--fps: Default = 30, si es que save = True, entonces la animación guardada tendrá este frame rate.
+Entrada:
 
-Salida
--True si es que termine el proceso sin problemas.
+- *landmarks_set: Múltiples video landmarks entregadas por 'kvideo_analysis()', separadas por comas.
+- plot_body_axis: Opcional, lista con nombres de distintas partes del cuerpo para mostrar ejes de referencia relativos a esa parte del cuerpo. Las opciones válidas son: 'central', 'left_shoulder', 'right_shoulder', 'left_hip', 'right_hip'
+- plot_angles: Opcional, lista con nombres de distintas partes del cuerpo para mostrar los distintos ángulos que produce con otras partes del cuerpo o con ejes de referencia. Las opciones válidas son: 'left_shoulder', 'left_elbow', 'right_shoulder', 'right_elbow', 'left_hip', 'left_knee', 'right_hip',  'right_knee'
+- save: Booleano opcional, 'default = True'. Si es True guardará un video con los graficos animados como un .gif.
+- filename: 'Default = angles_plot.gif', si es que save = True, entonces guardará el la animación con este nombre. Se guardará en el mismo directorio donde esté el .py del programa a menos a que se le de la ruta absoluta. Recordar escribir .gif al final del nombre.
+- fps: Default = 30, si es que save = True, entonces la animación guardada tendrá este frame rate.
+
+Salida:
+
+- True si es que termine el proceso sin problemas.
 ```python
 from KMT import *
 
@@ -240,7 +246,7 @@ data1_name = 'data1'
 data2_name = 'data2'
 
 #Datos del análisis de un video.
-lws, lis,   ims = kvideo_analysis(video_file)
+lws, lis, ims = kvideo_analysis(video_file)
 data1_lws, data1_lis, data1_ims = kload_analysis(data_folder, data_name = data1_name)
 data2_lws, data2_lis, data2_ims = kload_analysis(data_folder, data_name = data2_name)
 
@@ -269,18 +275,20 @@ kplot_landmarks_world(lws, data1_lws, data2_lws, plot_body_axis = axis, plot_ang
 ### 'kplot_angles()'
 Abre una ventana donde grafica landmarks en una grilla 3D, las imagenes analizadas junto con representaciones de los ángulos que forman distintas partes del cuerpo.
 
-Entrada
--video_landmarks_world: Video landmarks entregadas por 'kvideo_analysis()'
--video_images: Opcional, lista de imagenes entregadas por 'kvideo_analysis()'
--angles: 'Default = ['left_shoulder', 'right_shoulder', 'left_elbow', 'right_elbow', 'left_hip', 'right_hip', 'left_knee','right_knee']' Lista con los nombres de las partes del cuerpo de las que se quiere graficar sus ángulos.
--plot_body_axis: Opcional, lista con nombres de distintas partes del cuerpo para mostrar ejes de referencia relativos a esa parte del cuerpo. Las opciones válidas son: 'central', 'left_shoulder', 'right_shoulder', 'left_hip', 'right_hip'
--plot_angles: Opcional, lista con nombres de distintas partes del cuerpo para mostrar los distintos ángulos que produce con otras partes del cuerpo o con ejes de referencia en el gráfico 3D. Las opciones válidas son: 'left_shoulder', 'left_elbow', 'right_shoulder', 'right_elbow', 'left_hip', 'left_knee', 'right_hip',  'right_knee'
--save: Booleano opcional, 'default = True'. Si es True guardará un video con los graficos animados como un .gif.
--filename: 'Default = angles_plot.gif', si es que save = True, entonces guardará el la animación con este nombre. Se guardará en el mismo directorio donde esté el .py del programa a menos a que se le de la ruta absoluta. Recordar escribir .gif al final del nombre.
--fps: Default = 10, si es que save = True, entonces la animación guardada tendrá este frame rate.
+Entrada:
 
-Salida
--True si es que termine el proceso sin problemas.
+- video_landmarks_world: Video landmarks entregadas por 'kvideo_analysis()'
+- video_images: Opcional, lista de imagenes entregadas por 'kvideo_analysis()'
+- angles: 'Default = ['left_shoulder', 'right_shoulder', 'left_elbow', 'right_elbow', 'left_hip', 'right_hip', 'left_knee','right_knee']' Lista con los nombres de las partes del cuerpo de las que se quiere graficar sus ángulos.
+- plot_body_axis: Opcional, lista con nombres de distintas partes del cuerpo para mostrar ejes de referencia relativos a esa parte del cuerpo. Las opciones válidas son: 'central', 'left_shoulder', 'right_shoulder', 'left_hip', 'right_hip'
+- plot_angles: Opcional, lista con nombres de distintas partes del cuerpo para mostrar los distintos ángulos que produce con otras partes del cuerpo o con ejes de referencia en el gráfico 3D. Las opciones válidas son: 'left_shoulder', 'left_elbow', 'right_shoulder', 'right_elbow', 'left_hip', 'left_knee', 'right_hip',  'right_knee'
+- save: Booleano opcional, 'default = True'. Si es True guardará un video con los graficos animados como un .gif.
+- filename: 'Default = angles_plot.gif', si es que save = True, entonces guardará el la animación con este nombre. Se guardará en el mismo directorio donde esté el .py del programa a menos a que se le de la ruta absoluta. Recordar escribir .gif al final del nombre.
+- fps: Default = 10, si es que save = True, entonces la animación guardada tendrá este frame rate.
+
+Salida:
+
+- True si es que termine el proceso sin problemas.
 ```python
 from KMT import *
 
@@ -306,3 +314,4 @@ angles = ['left_shoulder', 'left_elbow', 'left_hip', 'left_knee']
 
 kplot_angles(lws, ims, plot_body_axis = axis, angles = angles, plot_angles = angles, save = True, filename = filename_path, fps = fps)
 ```
+---
